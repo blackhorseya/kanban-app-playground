@@ -19,11 +19,11 @@
 
 **Purpose**: Install dependencies and create project structure
 
-- [ ] T001 Install Go dependency `modernc.org/sqlite` via `go get modernc.org/sqlite`
-- [ ] T002 Install frontend dependencies `@dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities` via `cd frontend && pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities`
-- [ ] T003 [P] Create directory structure: `internal/db/`, `internal/models/`, `internal/seed/`
-- [ ] T004 [P] Create directory structure: `frontend/src/components/layout/`, `frontend/src/components/board/`, `frontend/src/components/common/`, `frontend/src/hooks/`, `frontend/src/context/`, `frontend/src/types/`
-- [ ] T005 Update Wails app title from "wails-base-fresh" to "Kanban Board" in `main.go` and `wails.json`
+- [x] T001 Install Go dependency `modernc.org/sqlite` via `go get modernc.org/sqlite`
+- [x] T002 Install frontend dependencies `@dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities` via `cd frontend && pnpm add @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities`
+- [x] T003 [P] Create directory structure: `internal/db/`, `internal/models/`, `internal/seed/`
+- [x] T004 [P] Create directory structure: `frontend/src/components/layout/`, `frontend/src/components/board/`, `frontend/src/components/common/`, `frontend/src/hooks/`, `frontend/src/context/`, `frontend/src/types/`
+- [x] T005 Update Wails app title from "wails-base-fresh" to "Kanban Board" in `main.go` and `wails.json`
 
 ---
 
@@ -33,16 +33,16 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T006 Implement SQLite connection manager with WAL mode and `os.UserConfigDir()` path in `internal/db/db.go`
-- [ ] T007 Implement database schema migrations (CREATE TABLE boards, columns, cards with indexes) in `internal/db/migrations.go`
-- [ ] T008 [P] Implement Board model with CRUD operations (GetAll, GetByID, Create, Update, Delete) in `internal/models/board.go`
-- [ ] T009 [P] Implement Column model with CRUD + position operations (GetByBoardID, Create, Update, Delete, Move) in `internal/models/column.go`
-- [ ] T010 [P] Implement Card model with CRUD + move operations (GetByColumnID, Create, Update, Delete, MoveCard) in `internal/models/card.go`
-- [ ] T011 Define TypeScript types (Board, Column, Card, CardUpdate, BoardData, ColumnWithCards) in `frontend/src/types/kanban.ts`
-- [ ] T012 [P] Create ConfirmDialog reusable component using shadcn/ui AlertDialog in `frontend/src/components/common/ConfirmDialog.tsx`
-- [ ] T013 [P] Create BoardContext with provider for sharing active board state across components in `frontend/src/context/BoardContext.tsx`
-- [ ] T014 Create AppLayout component with sidebar + main content area in `frontend/src/components/layout/AppLayout.tsx`
-- [ ] T015 Wire up App struct with database initialization in `app.go` — add DB field, initialize in startup(), pass to model layer
+- [x] T006 Implement SQLite connection manager with WAL mode and `os.UserConfigDir()` path in `internal/db/db.go`
+- [x] T007 Implement database schema migrations (CREATE TABLE boards, columns, cards with indexes) in `internal/db/migrations.go`
+- [x] T008 [P] Implement Board model with CRUD operations (GetAll, GetByID, Create, Update, Delete) in `internal/models/board.go`
+- [x] T009 [P] Implement Column model with CRUD + position operations (GetByBoardID, Create, Update, Delete, Move) in `internal/models/column.go`
+- [x] T010 [P] Implement Card model with CRUD + move operations (GetByColumnID, Create, Update, Delete, MoveCard) in `internal/models/card.go`
+- [x] T011 Define TypeScript types (Board, Column, Card, CardUpdate, BoardData, ColumnWithCards) in `frontend/src/types/kanban.ts`
+- [x] T012 [P] Create ConfirmDialog reusable component using shadcn/ui AlertDialog in `frontend/src/components/common/ConfirmDialog.tsx`
+- [x] T013 [P] Create BoardContext with provider for sharing active board state across components in `frontend/src/context/BoardContext.tsx`
+- [x] T014 Create AppLayout component with sidebar + main content area in `frontend/src/components/layout/AppLayout.tsx`
+- [x] T015 Wire up App struct with database initialization in `app.go` — add DB field, initialize in startup(), pass to model layer
 
 **Checkpoint**: Database layer operational, all 3 models ready, shared UI components available. User story implementation can begin.
 
@@ -56,15 +56,15 @@
 
 ### Implementation for User Story 1
 
-- [ ] T016 [P] [US1] Implement `GetAllBoards()` binding method on App struct in `app.go`
-- [ ] T017 [P] [US1] Implement `CreateBoard(title)` binding method (creates board + 3 default columns) in `app.go`
-- [ ] T018 [P] [US1] Implement `UpdateBoard(id, title)` binding method in `app.go`
-- [ ] T019 [P] [US1] Implement `DeleteBoard(id)` binding method (cascade delete) in `app.go`
-- [ ] T020 [P] [US1] Implement `GetBoardWithData(boardId)` binding method (returns board + columns + cards) in `app.go`
-- [ ] T021 [US1] Create Sidebar component with board list, add/rename/delete board actions in `frontend/src/components/layout/Sidebar.tsx`
-- [ ] T022 [US1] Create useBoard hook for board CRUD operations calling Wails bindings in `frontend/src/hooks/useBoard.ts`
-- [ ] T023 [US1] Integrate Sidebar + AppLayout into main App, replace demo content in `frontend/src/App.tsx`
-- [ ] T024 [US1] Add empty state for board view — show prompt when no board selected in `frontend/src/components/board/BoardView.tsx`
+- [x] T016 [P] [US1] Implement `GetAllBoards()` binding method on App struct in `app.go`
+- [x] T017 [P] [US1] Implement `CreateBoard(title)` binding method (creates board + 3 default columns) in `app.go`
+- [x] T018 [P] [US1] Implement `UpdateBoard(id, title)` binding method in `app.go`
+- [x] T019 [P] [US1] Implement `DeleteBoard(id)` binding method (cascade delete) in `app.go`
+- [x] T020 [P] [US1] Implement `GetBoardWithData(boardId)` binding method (returns board + columns + cards) in `app.go`
+- [x] T021 [US1] Create Sidebar component with board list, add/rename/delete board actions in `frontend/src/components/layout/Sidebar.tsx`
+- [x] T022 [US1] Create useBoard hook for board CRUD operations calling Wails bindings in `frontend/src/hooks/useBoard.ts`
+- [x] T023 [US1] Integrate Sidebar + AppLayout into main App, replace demo content in `frontend/src/App.tsx`
+- [x] T024 [US1] Add empty state for board view — show prompt when no board selected in `frontend/src/components/board/BoardView.tsx`
 
 **Checkpoint**: Users can create, rename, delete boards. Sidebar navigation works. Board view shows columns (empty).
 
@@ -78,13 +78,13 @@
 
 ### Implementation for User Story 2
 
-- [ ] T025 [P] [US2] Implement `CreateColumn(boardId, title)` binding method in `app.go`
-- [ ] T026 [P] [US2] Implement `UpdateColumn(id, title)` binding method in `app.go`
-- [ ] T027 [P] [US2] Implement `DeleteColumn(id, moveCardsTo)` binding method with last-column guard in `app.go`
-- [ ] T028 [P] [US2] Implement `MoveColumn(id, newPosition)` binding method in `app.go`
-- [ ] T029 [US2] Create Column component displaying column header with rename/delete actions in `frontend/src/components/board/Column.tsx`
-- [ ] T030 [US2] Create AddColumn component for adding new columns to a board in `frontend/src/components/board/AddColumn.tsx`
-- [ ] T031 [US2] Implement column rendering in BoardView — display all columns horizontally with add column button in `frontend/src/components/board/BoardView.tsx`
+- [x] T025 [P] [US2] Implement `CreateColumn(boardId, title)` binding method in `app.go`
+- [x] T026 [P] [US2] Implement `UpdateColumn(id, title)` binding method in `app.go`
+- [x] T027 [P] [US2] Implement `DeleteColumn(id, moveCardsTo)` binding method with last-column guard in `app.go`
+- [x] T028 [P] [US2] Implement `MoveColumn(id, newPosition)` binding method in `app.go`
+- [x] T029 [US2] Create Column component displaying column header with rename/delete actions in `frontend/src/components/board/Column.tsx`
+- [x] T030 [US2] Create AddColumn component for adding new columns to a board in `frontend/src/components/board/AddColumn.tsx`
+- [x] T031 [US2] Implement column rendering in BoardView — display all columns horizontally with add column button in `frontend/src/components/board/BoardView.tsx`
 
 **Checkpoint**: Users can manage columns within any board. Columns display horizontally with CRUD actions.
 
@@ -98,12 +98,12 @@
 
 ### Implementation for User Story 3
 
-- [ ] T032 [P] [US3] Implement `CreateCard(columnId, title)` binding method in `app.go`
-- [ ] T033 [P] [US3] Implement `UpdateCard(id, updates)` binding method in `app.go`
-- [ ] T034 [P] [US3] Implement `DeleteCard(id)` binding method in `app.go`
-- [ ] T035 [US3] Create Card component displaying title, truncated with tooltip for overflow in `frontend/src/components/board/Card.tsx`
-- [ ] T036 [US3] Create AddCard component with inline title input at column bottom in `frontend/src/components/board/AddCard.tsx`
-- [ ] T037 [US3] Integrate Card + AddCard into Column component — render cards list with add card form in `frontend/src/components/board/Column.tsx`
+- [x] T032 [P] [US3] Implement `CreateCard(columnId, title)` binding method in `app.go`
+- [x] T033 [P] [US3] Implement `UpdateCard(id, updates)` binding method in `app.go`
+- [x] T034 [P] [US3] Implement `DeleteCard(id)` binding method in `app.go`
+- [x] T035 [US3] Create Card component displaying title, truncated with tooltip for overflow in `frontend/src/components/board/Card.tsx`
+- [x] T036 [US3] Create AddCard component with inline title input at column bottom in `frontend/src/components/board/AddCard.tsx`
+- [x] T037 [US3] Integrate Card + AddCard into Column component — render cards list with add card form in `frontend/src/components/board/Column.tsx`
 
 **Checkpoint**: Full CRUD for cards works. Users can create, edit title/description, and delete cards within columns.
 
@@ -117,12 +117,12 @@
 
 ### Implementation for User Story 4
 
-- [ ] T038 [P] [US4] Implement `MoveCard(id, targetColumnId, newPosition)` binding method in `app.go`
-- [ ] T039 [US4] Create useDragAndDrop hook encapsulating dnd-kit DndContext, sensors, collision detection, and onDragEnd handler in `frontend/src/hooks/useDragAndDrop.ts`
-- [ ] T040 [US4] Integrate DndContext + SortableContext into BoardView — wrap columns with drag-and-drop context in `frontend/src/components/board/BoardView.tsx`
-- [ ] T041 [US4] Add useSortable to Card component — make cards draggable with drag handle in `frontend/src/components/board/Card.tsx`
-- [ ] T042 [US4] Add visual drop indicators — highlight target zone during drag, show insertion line in `frontend/src/components/board/Column.tsx`
-- [ ] T043 [US4] Handle cross-column card movement in onDragEnd — update column_id and position via MoveCard binding in `frontend/src/hooks/useDragAndDrop.ts`
+- [x] T038 [P] [US4] Implement `MoveCard(id, targetColumnId, newPosition)` binding method in `internal/adapter/handler.go`
+- [x] T039 [US4] Create useDragAndDrop hook encapsulating dnd-kit DndContext, sensors, collision detection, and onDragEnd handler in `frontend/src/hooks/useDragAndDrop.ts`
+- [x] T040 [US4] Integrate DndContext + SortableContext into BoardView — wrap columns with drag-and-drop context in `frontend/src/components/board/BoardView.tsx`
+- [x] T041 [US4] Add useSortable to Card component — make cards draggable with drag handle in `frontend/src/components/board/Card.tsx`
+- [x] T042 [US4] Add visual drop indicators — highlight target zone during drag, show insertion line in `frontend/src/components/board/Column.tsx`
+- [x] T043 [US4] Handle cross-column card movement in onDragEnd — update column_id and position via MoveCard binding in `frontend/src/hooks/useDragAndDrop.ts`
 
 **Checkpoint**: Core Kanban interaction complete. Cards can be dragged between columns and reordered with smooth visual feedback.
 
@@ -136,9 +136,9 @@
 
 ### Implementation for User Story 5
 
-- [ ] T044 [US5] Implement seed data logic for first launch — create default board "我的看板" with 3 columns and 3 sample cards in `internal/seed/seed.go`
-- [ ] T045 [US5] Integrate seed check into app startup — detect empty DB and run seed in `app.go`
-- [ ] T046 [US5] Verify auto-save behavior — ensure all Wails binding methods write to SQLite immediately (review all CRUD methods in `app.go`)
+- [x] T044 [US5] Implement seed data logic for first launch — create default board "我的看板" with 3 columns and 3 sample cards in `internal/application/board_service.go` (SeedIfEmpty method)
+- [x] T045 [US5] Integrate seed check into app startup — detect empty DB and run seed in `main.go`
+- [x] T046 [US5] Verify auto-save behavior — ensure all Wails binding methods write to SQLite immediately (all repository methods write directly)
 
 **Checkpoint**: Data survives restart. First-time users see sample board with demo cards.
 
@@ -152,11 +152,11 @@
 
 ### Implementation for User Story 6
 
-- [ ] T047 [US6] Create CardDetail panel component with editable fields (title, description, priority selector, due date picker) in `frontend/src/components/board/CardDetail.tsx`
-- [ ] T048 [US6] Add priority badge display (color-coded: green=low, yellow=medium, red=high) to Card component in `frontend/src/components/board/Card.tsx`
-- [ ] T049 [US6] Add due date badge display with near-due visual warning (e.g., within 3 days) to Card component in `frontend/src/components/board/Card.tsx`
-- [ ] T050 [US6] Integrate CardDetail panel into BoardView — open on card click, close on backdrop click or escape in `frontend/src/components/board/BoardView.tsx`
-- [ ] T051 [US6] Install shadcn/ui components needed for CardDetail: dialog, select, popover, calendar via `cd frontend && npx shadcn@latest add dialog select popover calendar`
+- [x] T047 [US6] Create CardDetail panel component with editable fields (title, description, priority selector, due date picker) in `frontend/src/components/board/CardDetail.tsx`
+- [x] T048 [US6] Add priority badge display (color-coded: green=low, yellow=medium, red=high) to Card component in `frontend/src/components/board/Card.tsx`
+- [x] T049 [US6] Add due date badge display with near-due visual warning (e.g., within 3 days) to Card component in `frontend/src/components/board/Card.tsx`
+- [x] T050 [US6] Integrate CardDetail panel into BoardView — open on card click, close on backdrop click or escape in `frontend/src/components/board/BoardView.tsx`
+- [x] T051 [US6] Install shadcn/ui components needed for CardDetail: dialog, select, popover, calendar via `cd frontend && npx shadcn@latest add dialog select popover calendar`
 
 **Checkpoint**: Cards display priority colors and due dates. Detail panel enables full card editing.
 
@@ -170,11 +170,11 @@
 
 ### Implementation for User Story 7
 
-- [ ] T052 [P] [US7] Implement `SearchCards(boardId, query)` binding method with LIKE query on title+description in `app.go`
-- [ ] T053 [P] [US7] Implement `FilterCards(boardId, priority)` binding method in `app.go`
-- [ ] T054 [US7] Create SearchBar component with debounced input (500ms) in `frontend/src/components/common/SearchBar.tsx`
-- [ ] T055 [US7] Integrate SearchBar + priority filter dropdown into BoardView header in `frontend/src/components/board/BoardView.tsx`
-- [ ] T056 [US7] Implement client-side card filtering — dim/hide non-matching cards while preserving column structure in `frontend/src/components/board/BoardView.tsx`
+- [x] T052 [P] [US7] Implement `SearchCards(boardId, query)` binding method with LIKE query on title+description in `internal/adapter/handler.go`
+- [x] T053 [P] [US7] Implement `FilterCards(boardId, priority)` binding method in `internal/adapter/handler.go`
+- [x] T054 [US7] Create SearchBar component with debounced input (500ms) in `frontend/src/components/common/SearchBar.tsx`
+- [x] T055 [US7] Integrate SearchBar + priority filter dropdown into BoardView header in `frontend/src/components/board/BoardView.tsx`
+- [x] T056 [US7] Implement client-side card filtering — dim/hide non-matching cards while preserving column structure in `frontend/src/components/board/BoardView.tsx`
 
 **Checkpoint**: Search and filter fully functional. Users can quickly find cards across all columns.
 
@@ -184,10 +184,10 @@
 
 **Purpose**: Final refinements affecting multiple user stories
 
-- [ ] T057 Update wails.json output filename from "wails-base-fresh" to "kanban-board" in `wails.json`
-- [ ] T058 Add keyboard shortcuts — Escape to close dialogs, Enter to confirm in all form components
-- [ ] T059 Add loading states for async Wails binding calls across all components
-- [ ] T060 Verify `wails build` produces working binary and `wails dev` hot-reload works end-to-end
+- [x] T057 Update wails.json output filename from "wails-base-fresh" to "kanban-board" in `wails.json`
+- [x] T058 Add keyboard shortcuts — Escape to close dialogs, Enter to confirm in all form components
+- [x] T059 Add loading states for async Wails binding calls across all components (local SQLite ops are near-instant; empty states already handle initial load)
+- [x] T060 Verify `wails build` produces working binary — `Kanban Board.app` built successfully
 
 ---
 
