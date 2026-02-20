@@ -54,3 +54,10 @@ The `//go:embed all:frontend/dist` directive embeds the built frontend into the 
 - `main.go` - Wails application bootstrap
 - `frontend/src/App.tsx` - Main React component
 - `wails.json` - Project config (uses pnpm)
+
+## Active Technologies
+- Go 1.23 (backend) + TypeScript 5.7 / React 18 (frontend) + Wails v2.11.0, modernc.org/sqlite, @dnd-kit/core+sortable, shadcn/ui, Tailwind CSS v4 (001-kanban-board)
+- SQLite (via modernc.org/sqlite, Pure Go, WAL mode) → `os.UserConfigDir()/KanbanApp/data.db` (001-kanban-board)
+
+## Recent Changes
+- 001-kanban-board: Added Go 1.23 (backend) + TypeScript 5.7 / React 18 (frontend) + Wails v2.11.0, modernc.org/sqlite, @dnd-kit/core+sortable, shadcn/ui, Tailwind CSS v4
