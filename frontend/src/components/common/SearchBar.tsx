@@ -11,7 +11,7 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onChange, placeholder = "搜尋卡片..." }: SearchBarProps) {
   const [local, setLocal] = useState(value);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     setLocal(value);

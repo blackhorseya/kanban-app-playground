@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -39,13 +39,13 @@ export function CardDetail({ card, open, onOpenChange }: CardDetailProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [showDelete, setShowDelete] = useState(false);
+  const [prevCardId, setPrevCardId] = useState(card?.id);
 
-  useEffect(() => {
-    if (card) {
-      setTitle(card.title);
-      setDescription(card.description ?? "");
-    }
-  }, [card]);
+  if (card && card.id !== prevCardId) {
+    setPrevCardId(card.id);
+    setTitle(card.title);
+    setDescription(card.description ?? "");
+  }
 
   const saveField = useCallback(
     async (updates: Record<string, string | undefined>) => {
