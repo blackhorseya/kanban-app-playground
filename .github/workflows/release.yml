@@ -48,14 +48,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Build with Wails
-        uses: dAppServer/wails-build-action@v3
+        uses: dAppServer/wails-build-action@v2.2
         with:
           build-name: kanban-board
           build-platform: ${{ matrix.platform }}
           go-version: "1.23"
           node-version: 22
-          package-manager: pnpm
           nsis: ${{ matrix.platform == 'windows/amd64' }}
           package: false
 
