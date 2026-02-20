@@ -91,17 +91,28 @@ jobs:
         with:
           path: artifacts
 
-      - name: Rename artifacts for release
+      - name: Prepare release assets
         run: |
           mkdir -p release
-          # Linux
+          echo "=== Artifact contents ==="
+          ls -laR artifacts/
+
+          # Linux binary
           cp artifacts/kanban-board-linux-amd64/kanban-board release/kanban-board-linux-amd64
-          # Windows
-          cp artifacts/kanban-board-windows-amd64/kanban-board.exe release/kanban-board-windows-amd64.exe
-          # macOS (.app bundle contents)
+
+          # Windows — copy all exe files, prefix non-unique names
+          for f in artifacts/kanban-board-windows-amd64/*; do
+            name=$(basename "$f")
+            cp "$f" "release/$name"
+          done
+
+          # macOS (.app bundle)
           cd artifacts/kanban-board-macos-universal
           zip -r ../../release/kanban-board-macos-universal.zip .
           cd ../..
+
+          echo "=== Release assets ==="
+          ls -la release/
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
