@@ -26,38 +26,68 @@ pnpm run build                   # TypeScript check + Vite build
 
 # Add shadcn/ui component
 cd frontend && npx shadcn@latest add [component-name]
+
+# Regenerate Wire DI (after changing wire.go or providers)
+go generate ./...
 ```
 
 ## Architecture
 
-This is a **Wails v2** desktop application with Go backend and React frontend.
+**Wails v2** desktop app: Go backend + React frontend, compiled into a single binary.
+
+### Backend (Clean Architecture + Wire DI)
+
+```
+internal/
+├── domain/          # Entities (Board, Column, Card) + Repository interfaces
+├── application/     # Use-case services (BoardService, ColumnService, CardService) + DTOs
+├── adapter/         # Handler — Wails binding struct, all exported methods → frontend TS functions
+└── infrastructure/
+    └── sqlite/      # Repository implementations, DB init (WAL mode), migrations
+```
+
+**Dependency flow**: `adapter → application → domain ← infrastructure/sqlite`
+
+- **Domain** defines entities and repository interfaces (pure Go, no dependencies)
+- **Application** implements business logic via services that depend on repository interfaces
+- **Adapter** contains `Handler` — the single Wails-bound struct; all exported methods become frontend-callable
+- **Infrastructure** implements repositories against SQLite (modernc.org/sqlite, pure Go)
+
+**Wire DI** (`wire.go` / `wire_gen.go`): Uses Google Wire for compile-time dependency injection. Each layer exports a `wire.NewSet(...)`. The root `InitializeHandler()` in `wire.go` wires everything together. After changing providers, run `go generate ./...`.
 
 ### Go ↔ Frontend Binding
 
-1. Define methods on `App` struct in `app.go`
-2. Bind the struct in `main.go` via `Bind: []interface{}{app}`
-3. Wails generates TypeScript bindings in `frontend/wailsjs/go/main/`
-4. Frontend imports and calls: `import { Greet } from "../wailsjs/go/main/App"`
+1. Define/modify exported methods on `Handler` struct in `internal/adapter/handler.go`
+2. `Handler` is bound in `main.go` via `Bind: []interface{}{handler}`
+3. Wails auto-generates TypeScript bindings in `frontend/wailsjs/go/adapter/`
+4. Frontend imports: `import { MethodName } from "../../wailsjs/go/adapter/Handler"`
+5. Models: `import { domain, application } from "../../wailsjs/go/models"`
 
-The `//go:embed all:frontend/dist` directive embeds the built frontend into the Go binary.
+The `//go:embed all:frontend/dist` directive in `main.go` embeds the built frontend into the Go binary.
 
 ### Frontend Stack
 
-- React 18 + TypeScript 5.7 + Vite 5.4
+- React 19 + TypeScript + Vite (pnpm)
 - Tailwind CSS v4 (using `@tailwindcss/vite` plugin, no `tailwind.config.js`)
 - shadcn/ui components in `frontend/src/components/ui/`
+- @dnd-kit/core + @dnd-kit/sortable for drag-and-drop
 - Path alias: `@/` maps to `frontend/src/`
 
-### Key Files
+### Frontend State Management
 
-- `app.go` - Backend logic exposed to frontend
-- `main.go` - Wails application bootstrap
-- `frontend/src/App.tsx` - Main React component
-- `wails.json` - Project config (uses pnpm)
+- `BoardContext` + `BoardProvider` — React Context for global board state (boards list, active board, refresh trigger)
+- `useBoard` hook — wraps Wails Go calls (CRUD boards) with context state updates
+- `useDragAndDrop` hook — encapsulates @dnd-kit drag logic for cards and columns
+- Component data flow: `App → BoardProvider → AppLayout (Sidebar + BoardView) → Column → Card`
 
-## Active Technologies
-- Go 1.23 (backend) + TypeScript 5.7 / React 18 (frontend) + Wails v2.11.0, modernc.org/sqlite, @dnd-kit/core+sortable, shadcn/ui, Tailwind CSS v4 (001-kanban-board)
-- SQLite (via modernc.org/sqlite, Pure Go, WAL mode) → `os.UserConfigDir()/KanbanApp/data.db` (001-kanban-board)
+### Data Storage
 
-## Recent Changes
-- 001-kanban-board: Added Go 1.23 (backend) + TypeScript 5.7 / React 18 (frontend) + Wails v2.11.0, modernc.org/sqlite, @dnd-kit/core+sortable, shadcn/ui, Tailwind CSS v4
+SQLite via modernc.org/sqlite (pure Go, no CGO). WAL mode + foreign keys enabled.
+- DB location: `os.UserConfigDir()/KanbanApp/data.db`
+- Schema migrations run on startup (`internal/infrastructure/sqlite/migrations.go`)
+- Cascade deletes: Board → Columns → Cards
+- First launch seeds sample data via `SeedIfEmpty()`
+
+### Feature Specs
+
+Feature specifications live in `specs/` (e.g. `specs/001-kanban-board/`). Each spec folder contains planning docs (`spec.md`, `plan.md`, `tasks.md`, `data-model.md`) used during development.
