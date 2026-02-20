@@ -36,6 +36,11 @@ func (h *Handler) Startup(ctx context.Context) {
 // Shutdown is called by Wails when the app is closing.
 func (h *Handler) Shutdown(_ context.Context) {}
 
+// SeedIfEmpty delegates to BoardService to populate sample data on first launch.
+func (h *Handler) SeedIfEmpty(ctx context.Context) error {
+	return h.boardSvc.SeedIfEmpty(ctx)
+}
+
 // ─── Board ──────────────────────────────────────────────────
 
 func (h *Handler) GetAllBoards() ([]domain.Board, error) {

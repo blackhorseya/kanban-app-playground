@@ -8,41 +8,22 @@ import (
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
-
-	"kanban-app-playground/internal/adapter"
-	"kanban-app-playground/internal/application"
-	"kanban-app-playground/internal/infrastructure/sqlite"
 )
 
 //go:embed all:frontend/dist
 var assets embed.FS
 
 func main() {
-	// ── Infrastructure ──────────────────────────────────────────
-	db, err := sqlite.NewDB()
+	handler, cleanup, err := InitializeHandler()
 	if err != nil {
-		log.Fatalf("Failed to initialize database: %v", err)
+		log.Fatalf("Failed to initialize: %v", err)
 	}
-	defer db.Close()
+	defer cleanup()
 
-	boardRepo := sqlite.NewBoardRepo(db)
-	columnRepo := sqlite.NewColumnRepo(db)
-	cardRepo := sqlite.NewCardRepo(db)
-
-	// ── Application ─────────────────────────────────────────────
-	boardSvc := application.NewBoardService(boardRepo, columnRepo, cardRepo)
-	columnSvc := application.NewColumnService(columnRepo, cardRepo)
-	cardSvc := application.NewCardService(cardRepo, columnRepo)
-
-	// ── Adapter (Wails binding) ─────────────────────────────────
-	handler := adapter.NewHandler(boardSvc, columnSvc, cardSvc)
-
-	// ── Seed sample data on first launch ────────────────────────
-	if err := boardSvc.SeedIfEmpty(context.Background()); err != nil {
+	if err := handler.SeedIfEmpty(context.Background()); err != nil {
 		log.Printf("Warning: seed failed: %v", err)
 	}
 
-	// ── Start Wails application ─────────────────────────────────
 	if err := wails.Run(&options.App{
 		Title:  "Kanban Board",
 		Width:  1024,

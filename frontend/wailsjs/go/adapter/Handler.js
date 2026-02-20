@@ -50,6 +50,10 @@ export function SearchCards(arg1, arg2) {
   return window['go']['adapter']['Handler']['SearchCards'](arg1, arg2);
 }
 
+export function SeedIfEmpty(arg1) {
+  return window['go']['adapter']['Handler']['SeedIfEmpty'](arg1);
+}
+
 export function UpdateBoard(arg1, arg2) {
   return window['go']['adapter']['Handler']['UpdateBoard'](arg1, arg2);
 }
